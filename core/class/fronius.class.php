@@ -230,7 +230,7 @@ class fronius extends eqLogic {
 			curl_close ($ch);
 			$this->checkAndUpdateCmd('PV_Prod', $json['Body']['Data']['PAC']['Value']);
 
-			$info = $this->getCmd(null, 'PV_Prod');
+			//$info = $this->getCmd(null, 'PV_Prod');
 			log::add('fronius','debug','info : ' . $info);
 			$info->setConfiguration('maxValue', $this->getConfiguration("Power"));
 			log::add('fronius','debug','config : ' . $$this->getConfiguration("Power"));
