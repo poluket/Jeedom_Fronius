@@ -47,6 +47,10 @@
 	  "display": {
         "generic_type": "DONT"
       },
+      "configuration" : {
+        "historizeRound":"2",
+        "minValue":"0"    
+       },
       "isVisible": 1,
       "isHistorized": 1,
       "logicalId": "PV_Prod",
@@ -110,9 +114,11 @@
 	  "unite": "Hz",
 	  "display": {
         "generic_type": "DONT"
-      },
-      "configuration" : {
-	"historizeRound":"2"
+    },
+    "configuration" : {
+      "historizeRound":"2",
+      "minValue":"0",
+      "maxValue":"65"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -131,7 +137,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"260"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -150,7 +158,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+  "historizeRound":"2",
+      "minValue":"0",
+      "maxValue":"800"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -169,7 +179,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"40"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -188,7 +200,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"50"
       },
       "isVisible": 1,
       "isHistorized": 1,

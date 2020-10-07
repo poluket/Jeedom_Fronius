@@ -79,6 +79,11 @@
 	  "display": {
         "generic_type": "DONT"
       },
+      "configuration" : {
+        "historizeRound":"2",
+        "minValue":"0",
+        "maxValue":"60"
+            },
       "isVisible": 1,
       "isHistorized": 1,
       "logicalId": "Freq",
@@ -96,7 +101,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"260"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -115,7 +122,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"260"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -134,7 +143,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"260"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -153,7 +164,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"20"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -172,7 +185,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"20"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -191,7 +206,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"20"
       },
       "isVisible": 1,
       "isHistorized": 1,

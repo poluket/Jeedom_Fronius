@@ -121,7 +121,7 @@ class fronius extends eqLogic {
 			}
 			if ($cmd == null || !is_object($cmd)) {
 				log::add('fronius','debug','Creating cmd : ' . $command['name'] );
-				$cmd = new shellyCmd();
+				$cmd = new froniusCmd();
 				$cmd->setEqLogic_id($this->getId());
 				utils::a2o($cmd, $command);
 				$cmd->save();
@@ -209,7 +209,7 @@ class fronius extends eqLogic {
       
       
       
-        log::add('fronius','debug','Call : ' . $Url);
+        log::add('fronius','debug','Call : URL ' . $Url);
       
         curl_setopt($ch, CURLOPT_URL, $Url);
 		$data = curl_exec($ch);
@@ -220,15 +220,18 @@ class fronius extends eqLogic {
 			$this->checkAndUpdateCmd('status', 'Erreur Données');
 			return;
 		}
-        log::add('fronius','debug','Call : ' . $data);
+        log::add('fronius','debug','Data : ' . $data);
         $json = json_decode($data, true);
-		//log::add('fronius', 'debug','All good22: json='. $json['Body']['Data']['IAC']['Value']);
+		
       
       	if (isset($json['Body']['Data']['IAC']['Value']) == true && ($this->getConfiguration('type') == 'Primo' || $this->getConfiguration('type') == 'SymoGen24')) {
-          log::add('fronius', 'debug','All good33: Data='. $data);
+          
         
 			curl_close ($ch);
 			$this->checkAndUpdateCmd('PV_Prod', $json['Body']['Data']['PAC']['Value']);
+
+			$info = $this->getCmd(null, 'PV_Prod');
+		    $info->setConfiguration('maxValue', $this->getConfiguration("Power"));
 			$this->checkAndUpdateCmd('PV_Tot', $json['Body']['Data']['TOTAL_ENERGY']['Value']);
 			$this->checkAndUpdateCmd('Freq', $json['Body']['Data']['FAC']['Value']);
 			$this->checkAndUpdateCmd('VoltsAC', $json['Body']['Data']['UAC']['Value']);
@@ -302,105 +305,8 @@ class fronius extends eqLogic {
 		}
       
     } 
-/*
-      
-		$request_http = new com_http($Url);
-		$request_http->setNoReportError(true);
-		if ($this->getConfiguration('user', '') != '' || $this->getConfiguration('password', '') != '') {
-			$auth = base64_encode(trim($this->getConfiguration('user')) . ':' . trim($this->getConfiguration('password')));
-			$request_http->setHeader(array("Authorization: Basic $auth"));
-		}
-		return $request_http->exec(30);
-      
-		
-		$status = $this->sendCommand('status');
-		$data = json_decode($status,true);
-		log::add('fronius','debug','Refresh : ' . print_r($data,true));
-		if (isset($data['relays']) == true && $this->getConfiguration('type') != 'shelly2-roller') {
-			$i = 0;
-			$url = 'http://' . config::byKey('internalAddr') . ':8122/id=' . $this->getId();
-			foreach ($data['relays'] as $relay) {
-				$url = $url . '&relay=' . $i . '&value=';
-				$this->sendCommand('settings/relay/' . $i . '?out_on_url=' . urlencode($url . 'out_on_url'));
-				$this->sendCommand('settings/relay/' . $i . '?out_off_url=' . urlencode($url . 'out_off_url'));
-				$settings = json_decode($this->sendCommand('settings/relay/' . $i), true);
-				log::add('shelly', 'debug', 'Button : ' . print_r($settings, true));
-				if ($settings['btn_type'] == 'detached') {
-					$cmd = shellyCmd::byEqLogicIdAndLogicalId($this->getId(),'button' . $i);
-					if (!is_object($cmd)) {
-						$cmd = new shellyCmd();
-						$cmd->setName('Bouton ' . $i);
-						$cmd->setEqLogic_id($this->id);
-						$cmd->setEqType('shelly');
-						$cmd->setLogicalId('button' . $i);
-						$cmd->setType('info');
-						$cmd->setSubType('binary');
-						$cmd->save();
-					}
-					$this->sendCommand('settings/relay/' . $i . '?btn_on_url=' . urlencode($url . 'btn_on_url'));
-					$this->sendCommand('settings/relay/' . $i . '?btn_off_url=' . urlencode($url . 'btn_off_url'));
-				}
-				if ($this->getConfiguration('type') != 'shelly4') {
-					$this->sendCommand('settings/relay/' . $i . '?longpush_url=' . urlencode($url . 'longpush_url'));
-					$this->sendCommand('settings/relay/' . $i . '?shortpush_url=' . urlencode($url . 'shortpush_url'));
-				}
-				$i++;
-			}
-		}
-		if (isset($data['inputs']) == true) {
-			$i = 0;
-			$url = 'http://' . config::byKey('internalAddr') . ':8122/id=' . $this->getId();
-			foreach ($data['inputs'] as $relay) {
-				$url = $url . '&input=' . $i . '&';
-				if ($this->getConfiguration('type') == 'button1') {
-					$this->sendCommand('settings/input/' . $i . '?shortpush_url=' . urlencode($url . 'event=s'));
-					$this->sendCommand('settings/input/' . $i . '?longpush_url=' . urlencode($url . 'event=l'));
-					$this->sendCommand('settings/input/' . $i . '?double_shortpush_url=' . urlencode($url . 'event=ss'));
-					$this->sendCommand('settings/input/' . $i . '?triple_shortpush_url=' . urlencode($url . 'event=sss'));
-				} else {
-					$settings = json_decode($this->sendCommand('settings/input/' . $i), true);
-					if ($settings['btn_type'] == "momentary") {
-						$this->sendCommand('settings/input/' . $i . '?shortpush_url=' . urlencode($url . 'event=s'));
-						$this->sendCommand('settings/input/' . $i . '?longpush_url=' . urlencode($url . 'event=l'));
-						$this->sendCommand('settings/input/' . $i . '?double_shortpush_url=' . urlencode($url . 'event=ss'));
-						$this->sendCommand('settings/input/' . $i . '?triple_shortpush_url=' . urlencode($url . 'event=sss'));
-						$this->sendCommand('settings/input/' . $i . '?shortpush_longpush_url=' . urlencode($url . 'event=sl'));
-						$this->sendCommand('settings/input/' . $i . '?longpush_shortpush_url=' . urlencode($url . 'event=ls'));
-					} else {
-						$this->sendCommand('settings/input/' . $i . '?btn_on_url=' . urlencode($url . 'value=1'));
-						$this->sendCommand('settings/input/' . $i . '?btn_off_url=' . urlencode($url . 'value=0'));
-					}
-				}
-				$i++;
-			}
-		}
-		if (isset($data['emeters']) == true && ($this->getConfiguration('type') == 'shellyem' || $this->getConfiguration('type') == 'shelly3em')) {
-			$i = 0;
-			$url = 'http://' . config::byKey('internalAddr') . ':8122/id=' . $this->getId();
-			foreach ($data['emeters'] as $relay) {
-				$this->sendCommand('settings/?over_power_url=' . urlencode($url . 'out_on=' . $i));
-				$this->sendCommand('settings/?under_power_url=' . urlencode($url . 'out_off=' . $i));
-				$i++;
-			}
-		}
-		if (isset($data['hum']) == true) {
-			$url = 'http://' . config::byKey('internalAddr') . ':8122/id=' . $this->getId() . '&';
-			$this->sendCommand('settings/?report_url=' . urlencode($url));
-		}
-		if (isset($data['lux.value']) == true) {
-			$url = 'http://' . config::byKey('internalAddr') . ':8122/id=' . $this->getId() . '&';
-			$this->sendCommand('settings/?dark_threshold=' . urlencode($url . "illumination=dark"));
-			$this->sendCommand('settings/?twilight_threshold=' . urlencode($url . "illumination=twilight"));
-		}
-		if (isset($data['gas_sensor']) == true) {
-			$url = 'http://' . config::byKey('internalAddr') . ':8122/id=' . $this->getId() . '&';
-			$this->sendCommand('settings/?alarm_off_url=' . urlencode($url . "alarm_state=none"));
-			$this->sendCommand('settings/?alarm_mild_url=' . urlencode($url . "alarm_state=mild"));
-			$this->sendCommand('settings/?alarm_heavy_url=' . urlencode($url . "alarm_state=heavy"));
-		}
-	}
-  */
-  
+
+  /*
 	public function getFroniusData() {
 		$Fronius_IP = $this->getConfiguration("IP");
 		$Fronius_Port = $this->getConfiguration("Port");
@@ -515,7 +421,7 @@ class fronius extends eqLogic {
 			return;
 		}
 		
-	}
+	}*/
 	
     /*
      * Non obligatoire mais permet de modifier l'affichage du widget si vous en avez besoin
@@ -539,21 +445,8 @@ class fronius extends eqLogic {
     /*     * **********************Getteur Setteur*************************** */
 }
 
-class froniusCmd extends cmd {
-    /*     * *************************Attributs****************************** */
-
-
-    /*     * ***********************Methode static*************************** */
-
-
-    /*     * *********************Methode d'instance************************* */
-
-    /*
-     * Non obligatoire permet de demander de ne pas supprimer les commandes même si elles ne sont pas dans la nouvelle configuration de l'équipement envoyé en JS
-      public function dontRemoveCmd() {
-      return true;
-      }
-     */
+/*class froniusCmd extends cmd {
+   
 
     public function execute($_options = array()) {
 				$eqlogic = $this->getEqLogic();
@@ -563,14 +456,14 @@ class froniusCmd extends cmd {
 						break;					
 		}
     }
-    /*     * **********************Getteur Setteur*************************** */
-}
+   
+}*/
 
 
 
 
 
-class shellyCmd extends cmd {
+class froniusCmd extends cmd {
 	//add functions for "virtual equipements" internal to the plugin for gsh compatibility
 	public function preSave() {
 		

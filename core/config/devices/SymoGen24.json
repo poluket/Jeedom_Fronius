@@ -47,6 +47,10 @@
 	  "display": {
         "generic_type": "DONT"
       },
+      "configuration" : {
+        "historizeRound":"2",
+        "minValue":"0"
+      },
       "isVisible": 1,
       "isHistorized": 1,
       "logicalId": "PV_Prod",
@@ -112,7 +116,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"65"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -131,7 +137,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"260"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -150,7 +158,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"260"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -169,7 +179,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"260"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -188,7 +200,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"1000"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -207,7 +221,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"1000"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -226,7 +242,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"60"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -245,7 +263,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"20"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -264,7 +284,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"20"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -283,7 +305,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"20"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -302,7 +326,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"30"
       },
       "isVisible": 1,
       "isHistorized": 1,
@@ -321,7 +347,9 @@
         "generic_type": "DONT"
       },
       "configuration" : {
-	"historizeRound":"2"
+	"historizeRound":"2",
+  "minValue":"0",
+  "maxValue":"20"
       },
       "isVisible": 1,
       "isHistorized": 1,
